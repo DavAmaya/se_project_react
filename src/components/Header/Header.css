@@ -1,0 +1,77 @@
+.header__container {
+  max-height: 40px;
+  max-width: 1360px;
+  padding-top: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__container--left {
+  display: flex;
+  gap: 24px;
+}
+
+.header__logo {
+  max-width: 89px;
+  max-height: 40px;
+}
+
+.header__date {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 24px;
+  padding-bottom: 5px;
+  padding-top: 11px;
+}
+
+.header__container--right {
+  display: flex;
+  gap: 12px;
+}
+
+.header__content {
+  display: flex;
+  max-width: 293px;
+  max-height: 25px;
+  gap: 20px;
+  text-wrap: no-wrap;
+  padding-bottom: 8px;
+  padding-top: 8px;
+}
+
+.header__button {
+  max-width: 116px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #000;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__button:hover {
+  cursor: pointer;
+}
+
+.header__username {
+  max-width: 157px;
+  color: #000;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__avatar {
+  max-width: 40px;
+  max-height: 40px;
+}
