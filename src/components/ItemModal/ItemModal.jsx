@@ -14,7 +14,8 @@ function ItemModal({ selectedCard, setSelectedCard }) {
   function handleClose(evt) {
     if (
       evt.target.className === "modal modal_is_opened" ||
-      evt.target.className === "itemModal__close_img"
+      evt.target.className === "itemModal__close_img" ||
+      evt.target.className === "itemModal__close"
     ) {
       setIsModalOpen(false);
       setTimeout(() => {

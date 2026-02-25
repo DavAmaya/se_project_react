@@ -2,18 +2,15 @@ import { useState } from "react";
 import WTWRLogo from "../../assets/Logo.svg";
 import avatar from "../../assets/avatar.svg";
 import "./Header.css";
-import ModalWithForm from "../ModalWithForm/ModalWithFrom";
 
-function Header({ city, setClothingItem }) {
+function Header({ city, setClothingItem, setOpenModalWithForm }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
-  const [openModal, setOpenModal] = useState(false);
-
   function openForm() {
-    setOpenModal(true);
+    setOpenModalWithForm(true);
   }
 
   return (
@@ -35,14 +32,6 @@ function Header({ city, setClothingItem }) {
           <img className="header__avatar" src={avatar} alt="Avatar"></img>
         </div>
       </div>
-
-      {openModal ? (
-        <ModalWithForm
-          setClothingItem={setClothingItem}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        ></ModalWithForm>
-      ) : null}
     </>
   );
 }

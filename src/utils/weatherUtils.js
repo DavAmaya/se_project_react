@@ -15,13 +15,18 @@ import snowNight from "../assets/night/snow.svg";
 import stormNight from "../assets/night/storm.svg";
 
 //api weather codes
+const defaultWeatherCard = {
+  weatherType: "Clear",
+  day: clearDay,
+  night: clearNight,
+};
 const weatherCards = [
   { weatherType: "Thunderstorm", day: stormDay, night: stormNight },
   { weatherType: "Rain", day: rainDay, night: rainNight },
   { weatherType: "Snow", day: snowDay, night: snowNight },
   { weatherType: "Fog", day: fogDay, night: fogNight },
   { weatherType: "Clouds", day: cloudyDay, night: cloudyNight },
-  { weatherType: "Clear", day: clearDay, night: clearNight },
+  { weatherType: "", day: clearDay, night: clearNight },
 ];
 
 //determines the time of day and returns correct weather card svg
@@ -32,7 +37,13 @@ export function getWeatherCard(time, weatherType) {
   const weather = getWeather(weatherType);
 
   const isDay = hour >= 6 && hour < 18;
-  return isDay ? weather.day : weather.night;
+  return isDay
+    ? weather
+      ? weather.day
+      : defaultWeatherCard.day
+    : weather
+      ? weather.day
+      : defaultWeatherCard.night;
 }
 
 function getWeather(weatherType) {

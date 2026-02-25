@@ -2,7 +2,7 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import "./Main.css";
 
-function Main({ clothingItems, weather, weatherCondition }) {
+function Main({ clothingItems, weather, weatherCondition, setSelectedCard }) {
   //console.log(weather);
 
   return (
@@ -19,6 +19,7 @@ function Main({ clothingItems, weather, weatherCondition }) {
         <ItemCard
           weatherCondition={weatherCondition}
           clothing={clothingItems}
+          setSelectedCard={setSelectedCard}
         ></ItemCard>
       </div>
     </div>

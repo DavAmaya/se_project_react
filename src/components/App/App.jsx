@@ -5,19 +5,47 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import { defaultClothingItems } from "../../utils/clothingItems";
-import { APIKey, latitude, longitude } from "../../utils/constants";
+import { apiKey, latitude, longitude } from "../../utils/constants";
 import { WeatherAPI } from "../../utils/weatherApi";
+import ItemModal from "../ItemModal/ItemModal";
+import ModalWithForm from "../ModalWithForm/ModalWithFrom";
 
 function App() {
-  const API = new WeatherAPI(APIKey, latitude, longitude);
+  const weatherApi = new WeatherAPI(apiKey, latitude, longitude);
   const [weather, setWeather] = useState(null);
   const [weatherCondition, setWeatherCondition] = useState(null);
   const [clothingItems, setClothingItem] = useState(defaultClothingItems);
+  const [openModalWithForm, setOpenModalWithForm] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  //form fields object arr
+  const formFields = [
+    {
+      name: "name",
+      min: "2",
+      type: "text",
+      title: "Name",
+      placeholder: "Name",
+    },
+    {
+      name: "link",
+      min: null,
+      type: "url",
+      title: "Image",
+      placeholder: "Image Url",
+    },
+  ];
+
+  const radioOptions = {
+    title: "Select the weather type:",
+    selections: ["hot", "warm", "cold"],
+  };
 
   //get the weather information by calling the api fetch
   useEffect(() => {
     //gets the weather data from the api
-    API.getWeather()
+    weatherApi
+      .getWeather()
       .then((res) => {
         setWeather({
           city: res.name,
@@ -35,28 +63,47 @@ function App() {
   useEffect(() => {
     if (!weather) return;
 
-    setWeatherCondition(API.getWeatherCondition(weather.temp));
+    setWeatherCondition(weatherApi.getWeatherCondition(weather.temp));
   }, [weather]);
 
   return (
-    <>
-      <div className="page">
-        {weather && weatherCondition ? (
-          <>
-            <Header
-              city={weather.city}
-              setClothingItem={setClothingItem}
-            ></Header>
-            <Main
-              weather={weather}
-              weatherCondition={weatherCondition}
-              clothingItems={clothingItems}
-            ></Main>
-          </>
-        ) : null}
-        <Footer></Footer>
-      </div>
-    </>
+    <div className="page">
+      {weather && weatherCondition ? (
+        <>
+          <Header
+            city={weather.city}
+            setClothingItem={setClothingItem}
+            setOpenModalWithForm={setOpenModalWithForm}
+          ></Header>
+          <Main
+            weather={weather}
+            weatherCondition={weatherCondition}
+            clothingItems={clothingItems}
+            setSelectedCard={setSelectedCard}
+          ></Main>
+        </>
+      ) : null}
+      <Footer></Footer>
+
+      {openModalWithForm ? (
+        <ModalWithForm
+          formFields={formFields}
+          hasRadio={true}
+          radioOptions={radioOptions}
+          btnText={"Add garment"}
+          setClothingItem={setClothingItem}
+          openModalWithForm={openModalWithForm}
+          setOpenModalWithForm={setOpenModalWithForm}
+        ></ModalWithForm>
+      ) : null}
+
+      {selectedCard ? (
+        <ItemModal
+          selectedCard={selectedCard}
+          setSelectedCard={setSelectedCard}
+        ></ItemModal>
+      ) : null}
+    </div>
   );
 }
 

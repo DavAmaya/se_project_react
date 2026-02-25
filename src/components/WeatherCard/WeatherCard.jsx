@@ -12,7 +12,11 @@ function WeatherCard({ weatherType, temp, time }) {
     <>
       {card ? (
         <div className="weatherCard__container">
-          <img className="weatherCard__Img" src={card} alt="Weather Card"></img>
+          <img
+            className="weatherCard__Img"
+            src={card}
+            alt={`${weatherType ? weatherType : null} weather background`}
+          ></img>
           <span className="weatherCard__temp">{Math.floor(temp)}°F</span>
         </div>
       ) : null}
