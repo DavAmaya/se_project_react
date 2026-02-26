@@ -1,44 +1,18 @@
-import { useEffect, useState } from "react";
 import "./ItemCard.css";
 
-function ItemCard({ weatherCondition, clothing, setSelectedCard }) {
-  const [filteredClothing, setFilteredClothing] = useState(null);
-
-  useEffect(() => {
-    setFilteredClothing(
-      clothing.filter((item) => {
-        return weatherCondition === item.weather;
-      }),
-    );
-  }, [weatherCondition, clothing]);
-
-  function handleSelectedCard(card) {
-    setSelectedCard(card);
-  }
-
+function ItemCard({ clothingItem, handleSelectedCard }) {
   return (
-    <div className="cardItems_container">
-      <ul className="cardList__container">
-        {filteredClothing
-          ? filteredClothing.map((item) => {
-              return (
-                <li
-                  className="card__container"
-                  key={item._id}
-                  onClick={() => handleSelectedCard(item)}
-                >
-                  <span className="card__name">{item.name}</span>
-                  <img
-                    className="card__img"
-                    src={item.link}
-                    alt={item.name}
-                  ></img>
-                </li>
-              );
-            })
-          : null}
-      </ul>
-    </div>
+    <li
+      className="card__container"
+      onClick={() => handleSelectedCard(clothingItem)}
+    >
+      <span className="card__name">{clothingItem.name}</span>
+      <img
+        className="card__img"
+        src={clothingItem.link}
+        alt={clothingItem.name}
+      ></img>
+    </li>
   );
 }
 
