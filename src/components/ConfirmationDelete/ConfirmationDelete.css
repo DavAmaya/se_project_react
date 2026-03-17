@@ -1,0 +1,90 @@
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #0000004d;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 1s linear;
+}
+
+.modal.modal_is_opened {
+  opacity: 1;
+}
+
+.confirmation-delete__container {
+  position: relative;
+  max-width: 670px;
+  max-height: 280px;
+  background-color: #fff;
+  border-radius: 16px;
+}
+
+.confirmation-delete__close {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 27px;
+  right: 24px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+.confirmation-delete__close:hover {
+  cursor: pointer;
+}
+
+.confirmation-delete__close_img {
+  width: 100%;
+  height: 100%;
+}
+
+.confirmation-delete__text {
+  margin-top: 60px;
+  color: #000;
+  text-align: center;
+  font-weight: 700;
+  font-style: bold;
+  font-size: 20px;
+  line-height: 24px;
+  white-space: wrap;
+  padding: 0 151px;
+}
+
+.confirmation-delete__options {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  align-items: center;
+}
+
+.confirmation-delete__btn {
+  background: none;
+  font-weight: 700;
+  font-style: bold;
+  font-size: 20px;
+  border: none;
+  line-height: 24px;
+  margin-bottom: 24px;
+}
+
+.confirmation-delete__btn:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.confirmation-delete__delete {
+  width: 138px;
+  color: #ff4d00;
+  white-space: nowrap;
+}
+
+.confirmation-delete__cancel {
+  width: 61px;
+  margin-bottom: 36px;
+}

@@ -1,14 +1,17 @@
-import { useState } from "react";
 import WTWRLogo from "../../assets/Logo.svg";
-import avatar from "../../assets/avatar.svg";
+import avatarDefault from "../../assets/avatar.svg";
 import "./Header.css";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import { NavLink } from "react-router-dom";
 
-function Header({ city, setClothingItem, setOpenModalWithForm }) {
+function Header({ city, setOpenModalWithForm }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
+  const username = "Terrence Tegegne";
+  const avatar = avatarDefault;
   function openForm() {
     setOpenModalWithForm(true);
   }
@@ -17,19 +20,30 @@ function Header({ city, setClothingItem, setOpenModalWithForm }) {
     <>
       <div className="header__container">
         <div className="header__container--left">
-          <img className="header__logo" src={WTWRLogo} alt="WTWR Logo"></img>
+          <NavLink to={"/"}>
+            <img className="header__logo" src={WTWRLogo} alt="WTWR Logo"></img>
+          </NavLink>
           <span className="header__date">
             {currentDate}, {city}
           </span>
         </div>
         <div className="header__container--right">
-          <div className="header__content">
-            <button className="header__button" onClick={openForm}>
-              + Add clothes
-            </button>
-            <span className="header__username">Terrence Tegegne</span>
-          </div>
-          <img className="header__avatar" src={avatar} alt="Avatar"></img>
+          <ToggleSwitch />
+          <button className="header__button" onClick={openForm}>
+            + Add clothes
+          </button>
+          <NavLink to={"/profile"} className="header-navLink__profile">
+            <div className="header__profile">
+              <span className="header__username">{username}</span>
+              {avatar ? (
+                <img className="header__avatar" src={avatar} alt="Avatar"></img>
+              ) : (
+                <span className="header__avatar header__avatar_none">
+                  {username.toUpperCase().charAt(0) || ""}
+                </span>
+              )}
+            </div>
+          </NavLink>
         </div>
       </div>
     </>

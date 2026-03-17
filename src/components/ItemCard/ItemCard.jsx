@@ -9,7 +9,7 @@ function ItemCard({ clothingItem, handleSelectedCard }) {
       <span className="card__name">{clothingItem.name}</span>
       <img
         className="card__img"
-        src={clothingItem.link}
+        src={clothingItem.imageUrl}
         alt={clothingItem.name}
       ></img>
     </li>

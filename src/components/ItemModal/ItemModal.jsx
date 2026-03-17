@@ -2,7 +2,7 @@ import "./ItemModal.css";
 import closeItem from "../../assets/grey-close-icon.svg";
 import { useEffect, useState } from "react";
 
-function ItemModal({ selectedCard, setSelectedCard }) {
+function ItemModal({ selectedCard, setSelectedCard, setDeleteModal }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //conditional statement to determine if the modal can open
@@ -22,6 +22,11 @@ function ItemModal({ selectedCard, setSelectedCard }) {
         setSelectedCard(null);
       }, 1000);
     }
+  }
+
+  function handleDelete() {
+    setDeleteModal(true);
+    setIsModalOpen(false);
   }
   return (
     <>
@@ -44,14 +49,19 @@ function ItemModal({ selectedCard, setSelectedCard }) {
           </button>
           <img
             className="itemModal__img"
-            src={selectedCard.link}
+            src={selectedCard.imageUrl}
             alt={selectedCard.name}
           ></img>
-          <div className="itemModal_description">
-            <span className="itemModal__text">{selectedCard.name}</span>
-            <span className="itemModal__text">
-              Weather: {selectedCard.weather}
-            </span>
+          <div className="itemModal__bottom-containter">
+            <div className="itemModal_description">
+              <span className="itemModal__text">{selectedCard.name}</span>
+              <span className="itemModal__text">
+                Weather: {selectedCard.weather}
+              </span>
+            </div>
+            <button className="itemModal__delete" onClick={handleDelete}>
+              Delete Item
+            </button>
           </div>
         </div>
       </div>

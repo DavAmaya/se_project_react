@@ -1,4 +1,5 @@
 import closeItem from "../../assets/grey-close-icon.svg";
+import { useForm } from "../../hooks/useForm";
 import "./ModalWithForm.css";
 import { useEffect, useState } from "react";
 
@@ -10,18 +11,18 @@ function ModalWithForm({
   setClothingItem,
   openModalWithForm,
   setOpenModalWithForm,
+  clothingApi,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [id, setId] = useState(17);
 
-  const [formValues, setFormValues] = useState({
+  const defaultValues = {
     name: "",
+    imageUrl: "",
     weather: "",
-    link: "",
-  });
+  };
 
-  const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(false);
+  const { values, handleChange, isValid, errors, setErrors, setIsValid } =
+    useForm(defaultValues);
 
   //conditional statement to determine if the modal can open
   useEffect(() => {
@@ -41,33 +42,6 @@ function ModalWithForm({
     }
   }
 
-  function handleChange(e) {
-    const { name, value, validity } = e.target;
-
-    let errorMessage = "";
-
-    if (validity.valueMissing) {
-      errorMessage = "(This field is required.)";
-    } else if (validity.typeMismatch && name === "link") {
-      errorMessage = "(Please enter a valid URL.)";
-    } else if (validity.tooShort) {
-      errorMessage = "(Must be at least 2 characters.)";
-    }
-
-    setFormValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    //error messages for the form inputs
-    setErrors((prev) => ({
-      ...prev,
-      [name]: errorMessage,
-    }));
-
-    setIsValid(e.target.closest("form").checkValidity());
-  }
-
   function handleSubmit(evt) {
     if (evt) {
       evt.preventDefault();
@@ -77,20 +51,16 @@ function ModalWithForm({
     if (!isValid) return;
 
     const newItem = {
-      _id: id,
-      ...formValues,
+      ...values,
     };
-    console.log(newItem);
-    setClothingItem((prevItems) => [...prevItems, newItem]);
-
-    // resets form
-    setFormValues({
-      name: "",
-      link: "",
-      weather: "",
-    });
-
-    setId((prevItems) => (prevItems += 1));
+    clothingApi
+      .addNewItem(newItem)
+      .then((res) => {
+        setClothingItem((prevItems) => [...prevItems, res]);
+      })
+      .catch((err) => {
+        console.error(`Error: ${err}`);
+      });
     //resets states
     setErrors({});
     setIsValid(false);
@@ -130,7 +100,9 @@ function ModalWithForm({
               >
                 <p className="modal__label_title">
                   {`${field.title}*`}{" "}
-                  <span className="modal__input_error">{errors.name}</span>
+                  <span className="modal__input_error">
+                    {errors[field.name]}
+                  </span>
                 </p>
                 <input
                   name={field.name}
@@ -138,7 +110,7 @@ function ModalWithForm({
                   type={field.type}
                   className={`modal__input ${errors[field.name] ? "modal__input_type_error" : ""}`}
                   minLength={field.min ? field.min : null}
-                  value={formValues[field.name]}
+                  value={values[field.name]}
                   onChange={handleChange}
                   placeholder={field.placeholder}
                   required
@@ -162,7 +134,7 @@ function ModalWithForm({
                       className="modal__radio_input"
                       value={option}
                       required
-                      checked={formValues.weather === option}
+                      checked={values.weather === option}
                       onChange={handleChange}
                     />
                     {capitalizeFirstLetter(option)}

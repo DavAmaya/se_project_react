@@ -37,12 +37,13 @@ export function getWeatherCard(time, weatherType) {
   const weather = getWeather(weatherType);
 
   const isDay = hour >= 6 && hour < 18;
+
   return isDay
     ? weather
       ? weather.day
       : defaultWeatherCard.day
     : weather
-      ? weather.day
+      ? weather.night
       : defaultWeatherCard.night;
 }
 

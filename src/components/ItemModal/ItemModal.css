@@ -50,6 +50,11 @@
   border-top-right-radius: 16px;
 }
 
+.itemModal__bottom-containter {
+  display: flex;
+  justify-content: space-between;
+}
+
 .itemModal_description {
   display: flex;
   flex-direction: column;
@@ -64,4 +69,23 @@
   font-style: normal;
   font-size: 20px;
   line-height: 24px;
+}
+
+.itemModal__delete {
+  color: #ff4d00;
+  width: 98px;
+  height: 13px;
+  margin-top: 24px;
+  margin-right: 33px;
+  padding: 0;
+  background: none;
+  font-weight: 700;
+  font-style: bold;
+  font-size: 16px;
+  border: none;
+}
+
+.itemModal__delete:hover {
+  cursor: pointer;
+  color: #ff4d00b2;
 }
