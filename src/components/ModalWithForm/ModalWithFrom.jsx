@@ -8,9 +8,9 @@ function ModalWithForm({
   hasRadio,
   radioOptions,
   btnText,
-  setClothingItem,
-  openModalWithForm,
-  setOpenModalWithForm,
+  setClothingItems,
+  isAddItemModalOpen,
+  setIsAddItemModalOpen,
   clothingApi,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,8 +26,8 @@ function ModalWithForm({
 
   //conditional statement to determine if the modal can open
   useEffect(() => {
-    openModalWithForm ? setIsModalOpen(true) : setIsModalOpen(false);
-  }, [openModalWithForm]);
+    isAddItemModalOpen ? setIsModalOpen(true) : setIsModalOpen(false);
+  }, [isAddItemModalOpen]);
   //handles close and set a 1s timer to nullify the seleceted card
   function handleClose(evt) {
     if (
@@ -37,7 +37,7 @@ function ModalWithForm({
     ) {
       setIsModalOpen(false);
       setTimeout(() => {
-        setOpenModalWithForm(false);
+        setIsAddItemModalOpen(false);
       }, 1000);
     }
   }
@@ -56,18 +56,18 @@ function ModalWithForm({
     clothingApi
       .addNewItem(newItem)
       .then((res) => {
-        setClothingItem((prevItems) => [...prevItems, res]);
+        setClothingItems((prevItems) => [res, ...prevItems]);
+        //resets states
+        setErrors({});
+        setIsValid(false);
+        setIsModalOpen(false);
+        setTimeout(() => {
+          setIsAddItemModalOpen(false);
+        }, 1000);
       })
       .catch((err) => {
         console.error(`Error: ${err}`);
       });
-    //resets states
-    setErrors({});
-    setIsValid(false);
-    setIsModalOpen(false);
-    setTimeout(() => {
-      setOpenModalWithForm(false);
-    }, 1000);
   }
 
   function capitalizeFirstLetter(string) {
@@ -76,83 +76,79 @@ function ModalWithForm({
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   return (
-    <>
-      <div
-        className={`modal ${isModalOpen ? "modal_is_opened" : ""}`}
-        onClick={handleClose}
-      >
-        <div className="modal__container">
-          <h2 className="modal__title">New garment</h2>
-          <button
-            className="modal__close"
-            type="button"
-            aria-label="close"
-            onClick={handleClose}
-          >
-            <img className="modal__close_img" src={closeItem} alt="close"></img>
-          </button>
-          <form noValidate className="modal__form" onSubmit={handleSubmit}>
-            {formFields.map((field) => (
-              <label
-                key={field.name}
-                htmlFor={`${field.name}-input`}
-                className="modal__label"
-              >
-                <p className="modal__label_title">
-                  {`${field.title}*`}{" "}
-                  <span className="modal__input_error">
-                    {errors[field.name]}
-                  </span>
-                </p>
-                <input
-                  name={field.name}
-                  id={`${field.name}-input`}
-                  type={field.type}
-                  className={`modal__input ${errors[field.name] ? "modal__input_type_error" : ""}`}
-                  minLength={field.min ? field.min : null}
-                  value={values[field.name]}
-                  onChange={handleChange}
-                  placeholder={field.placeholder}
-                  required
-                />
-              </label>
-            ))}
-
-            {hasRadio ? (
-              <>
-                <p className="modal__radio_title">{radioOptions.title}</p>
-                {radioOptions.selections.map((option) => (
-                  <label
-                    key={option}
-                    htmlFor={`modal__radio_${option}`}
-                    className="modal__radio"
-                  >
-                    <input
-                      name="weather"
-                      type="radio"
-                      id={`modal__radio_${option}`}
-                      className="modal__radio_input"
-                      value={option}
-                      required
-                      checked={values.weather === option}
-                      onChange={handleChange}
-                    />
-                    {capitalizeFirstLetter(option)}
-                  </label>
-                ))}{" "}
-              </>
-            ) : null}
-            <button
-              className={`modal__btn ${!isValid ? "modal__btn_disabled" : ""}`}
-              type="submit"
-              disabled={!isValid}
+    <div
+      className={`modal ${isModalOpen ? "modal_is_opened" : ""}`}
+      onClick={handleClose}
+    >
+      <div className="modal__container">
+        <h2 className="modal__title">New garment</h2>
+        <button
+          className="modal__close"
+          type="button"
+          aria-label="close"
+          onClick={handleClose}
+        >
+          <img className="modal__close_img" src={closeItem} alt="close"></img>
+        </button>
+        <form noValidate className="modal__form" onSubmit={handleSubmit}>
+          {formFields.map((field) => (
+            <label
+              key={field.name}
+              htmlFor={`${field.name}-input`}
+              className="modal__label"
             >
-              {btnText}
-            </button>
-          </form>
-        </div>
+              <p className="modal__label_title">
+                {`${field.title}*`}{" "}
+                <span className="modal__input_error">{errors[field.name]}</span>
+              </p>
+              <input
+                name={field.name}
+                id={`${field.name}-input`}
+                type={field.type}
+                className={`modal__input ${errors[field.name] ? "modal__input_type_error" : ""}`}
+                minLength={field.min ? field.min : null}
+                value={values[field.name]}
+                onChange={handleChange}
+                placeholder={field.placeholder}
+                required
+              />
+            </label>
+          ))}
+
+          {hasRadio ? (
+            <>
+              <p className="modal__radio_title">{radioOptions.title}</p>
+              {radioOptions.selections.map((option) => (
+                <label
+                  key={option}
+                  htmlFor={`modal__radio_${option}`}
+                  className="modal__radio"
+                >
+                  <input
+                    name="weather"
+                    type="radio"
+                    id={`modal__radio_${option}`}
+                    className="modal__radio_input"
+                    value={option}
+                    required
+                    checked={values.weather === option}
+                    onChange={handleChange}
+                  />
+                  {capitalizeFirstLetter(option)}
+                </label>
+              ))}{" "}
+            </>
+          ) : null}
+          <button
+            className={`modal__btn ${!isValid ? "modal__btn_disabled" : ""}`}
+            type="submit"
+            disabled={!isValid}
+          >
+            {btnText}
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
 

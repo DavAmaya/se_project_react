@@ -10,11 +10,13 @@ function Main({ clothingItems, weather, weatherCondition, setSelectedCard }) {
   const context = useContext(CurrentTemperatureUnitContext);
 
   useEffect(() => {
-    setFilteredClothing(
-      clothingItems.filter((item) => {
-        return weatherCondition === item.weather;
-      }),
-    );
+    if (clothingItems) {
+      setFilteredClothing(
+        clothingItems.filter((item) => {
+          return weatherCondition === item.weather;
+        }),
+      );
+    }
   }, [weatherCondition, clothingItems]);
 
   function handleSelectedCard(card) {

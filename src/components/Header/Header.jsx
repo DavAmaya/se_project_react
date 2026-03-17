@@ -17,36 +17,34 @@ function Header({ city, setOpenModalWithForm }) {
   }
 
   return (
-    <>
-      <div className="header__container">
-        <div className="header__container--left">
-          <NavLink to={"/"}>
-            <img className="header__logo" src={WTWRLogo} alt="WTWR Logo"></img>
-          </NavLink>
-          <span className="header__date">
-            {currentDate}, {city}
-          </span>
-        </div>
-        <div className="header__container--right">
-          <ToggleSwitch />
-          <button className="header__button" onClick={openForm}>
-            + Add clothes
-          </button>
-          <NavLink to={"/profile"} className="header-navLink__profile">
-            <div className="header__profile">
-              <span className="header__username">{username}</span>
-              {avatar ? (
-                <img className="header__avatar" src={avatar} alt="Avatar"></img>
-              ) : (
-                <span className="header__avatar header__avatar_none">
-                  {username.toUpperCase().charAt(0) || ""}
-                </span>
-              )}
-            </div>
-          </NavLink>
-        </div>
+    <div className="header__container">
+      <div className="header__container--left">
+        <NavLink to={"/"}>
+          <img className="header__logo" src={WTWRLogo} alt="WTWR Logo"></img>
+        </NavLink>
+        <span className="header__date">
+          {currentDate}, {city}
+        </span>
       </div>
-    </>
+      <div className="header__container--right">
+        <ToggleSwitch />
+        <button className="header__button" onClick={openForm}>
+          + Add clothes
+        </button>
+        <NavLink to={"/profile"} className="header-navLink__profile">
+          <div className="header__profile">
+            <span className="header__username">{username}</span>
+            {avatar ? (
+              <img className="header__avatar" src={avatar} alt="Avatar"></img>
+            ) : (
+              <span className="header__avatar header__avatar_none">
+                {username.toUpperCase().charAt(0) || ""}
+              </span>
+            )}
+          </div>
+        </NavLink>
+      </div>
+    </div>
   );
 }
 

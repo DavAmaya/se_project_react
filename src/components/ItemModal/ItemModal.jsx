@@ -2,7 +2,7 @@ import "./ItemModal.css";
 import closeItem from "../../assets/grey-close-icon.svg";
 import { useEffect, useState } from "react";
 
-function ItemModal({ selectedCard, setSelectedCard, setDeleteModal }) {
+function ItemModal({ selectedCard, setSelectedCard, setIsDeleteModalOpen }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //conditional statement to determine if the modal can open
@@ -25,47 +25,45 @@ function ItemModal({ selectedCard, setSelectedCard, setDeleteModal }) {
   }
 
   function handleDelete() {
-    setDeleteModal(true);
+    setIsDeleteModalOpen(true);
     setIsModalOpen(false);
   }
   return (
-    <>
-      <div
-        className={`modal ${isModalOpen ? "modal_is_opened" : ""}`}
-        onClick={handleClose}
-      >
-        <div className="itemModal__container">
-          <button
-            className="itemModal__close"
-            type="button"
-            aria-label="close"
-            onClick={handleClose}
-          >
-            <img
-              className="itemModal__close_img"
-              src={closeItem}
-              alt="close"
-            ></img>
-          </button>
+    <div
+      className={`modal ${isModalOpen ? "modal_is_opened" : ""}`}
+      onClick={handleClose}
+    >
+      <div className="itemModal__container">
+        <button
+          className="itemModal__close"
+          type="button"
+          aria-label="close"
+          onClick={handleClose}
+        >
           <img
-            className="itemModal__img"
-            src={selectedCard.imageUrl}
-            alt={selectedCard.name}
+            className="itemModal__close_img"
+            src={closeItem}
+            alt="close"
           ></img>
-          <div className="itemModal__bottom-containter">
-            <div className="itemModal_description">
-              <span className="itemModal__text">{selectedCard.name}</span>
-              <span className="itemModal__text">
-                Weather: {selectedCard.weather}
-              </span>
-            </div>
-            <button className="itemModal__delete" onClick={handleDelete}>
-              Delete Item
-            </button>
+        </button>
+        <img
+          className="itemModal__img"
+          src={selectedCard.imageUrl}
+          alt={selectedCard.name}
+        ></img>
+        <div className="itemModal__bottom-containter">
+          <div className="itemModal_description">
+            <span className="itemModal__text">{selectedCard.name}</span>
+            <span className="itemModal__text">
+              Weather: {selectedCard.weather}
+            </span>
           </div>
+          <button className="itemModal__delete" onClick={handleDelete}>
+            Delete Item
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

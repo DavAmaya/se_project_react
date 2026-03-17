@@ -1,22 +1,22 @@
 import ModalWithForm from "../ModalWithForm/ModalWithFrom";
 
 function AddItemModal({
-  openModalWithForm,
-  setOpenModalWithForm,
+  isAddItemModalOpen,
+  setIsAddItemModalOpen,
   radioOptions,
-  setClothingItem,
+  setClothingItems,
   formFields,
   clothingApi,
 }) {
-  return openModalWithForm ? (
+  return isAddItemModalOpen ? (
     <ModalWithForm
       formFields={formFields}
       hasRadio={true}
       radioOptions={radioOptions}
       btnText={"Add garment"}
-      setClothingItem={setClothingItem}
-      openModalWithForm={openModalWithForm}
-      setOpenModalWithForm={setOpenModalWithForm}
+      setClothingItems={setClothingItems}
+      isAddItemModalOpen={isAddItemModalOpen}
+      setIsAddItemModalOpen={setIsAddItemModalOpen}
       clothingApi={clothingApi}
     ></ModalWithForm>
   ) : null;

@@ -20,10 +20,10 @@ function App() {
   const clothingApi = new ClothingAPI();
   const [weather, setWeather] = useState(null);
   const [weatherCondition, setWeatherCondition] = useState(null);
-  const [clothingItems, setClothingItem] = useState(null);
-  const [openModalWithForm, setOpenModalWithForm] = useState(false);
+  const [clothingItems, setClothingItems] = useState(null);
+  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [openDeleteModal, setDeleteModal] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
@@ -79,7 +79,7 @@ function App() {
     clothingApi
       .getClothing()
       .then((res) => {
-        setClothingItem(res);
+        setClothingItems(res);
       })
       .catch((err) => {
         console.error(`Error: ${err}`);
@@ -90,7 +90,7 @@ function App() {
   useEffect(() => {
     if (!weather) return;
 
-    setWeatherCondition(weatherApi.getWeatherCondition(weather.temp));
+    setWeatherCondition(weatherApi.getWeatherCondition(weather.temp.F));
   }, [weather]);
 
   return (
@@ -102,7 +102,6 @@ function App() {
           <>
             <Header
               city={weather.city}
-              setClothingItem={setClothingItem}
               setOpenModalWithForm={setOpenModalWithForm}
             ></Header>
             <Routes>
@@ -123,7 +122,7 @@ function App() {
                   <Profile
                     clothingItems={clothingItems}
                     setSelectedCard={setSelectedCard}
-                    setOpenModalWithForm={setOpenModalWithForm}
+                    setIsAddItemModalOpen={setIsAddItemModalOpen}
                   />
                 }
               />
@@ -135,9 +134,9 @@ function App() {
         <AddItemModal
           formFields={formFields}
           radioOptions={radioOptions}
-          setClothingItem={setClothingItem}
-          openModalWithForm={openModalWithForm}
-          setOpenModalWithForm={setOpenModalWithForm}
+          setClothingItems={setClothingItems}
+          isAddItemModalOpen={isAddItemModalOpen}
+          setIsAddItemModalOpen={setIsAddItemModalOpen}
           clothingApi={clothingApi}
         ></AddItemModal>
 
@@ -145,14 +144,14 @@ function App() {
           <ItemModal
             selectedCard={selectedCard}
             setSelectedCard={setSelectedCard}
-            setDeleteModal={setDeleteModal}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
           ></ItemModal>
         ) : null}
 
-        {openDeleteModal ? (
+        {isDeleteModalOpen ? (
           <ConfirmationDelete
-            openDeleteModal={openDeleteModal}
-            setDeleteModal={setDeleteModal}
+            isDeleteModalOpen={isDeleteModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
             setSelectedCard={setSelectedCard}
             selectedCard={selectedCard}
             clothingApi={clothingApi}
