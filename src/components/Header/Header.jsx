@@ -4,7 +4,7 @@ import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { NavLink } from "react-router-dom";
 
-function Header({ city, setOpenModalWithForm }) {
+function Header({ city, setIsAddItemModalOpen }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -13,7 +13,7 @@ function Header({ city, setOpenModalWithForm }) {
   const username = "Terrence Tegegne";
   const avatar = avatarDefault;
   function openForm() {
-    setOpenModalWithForm(true);
+    setIsAddItemModalOpen(true);
   }
 
   return (

@@ -102,7 +102,7 @@ function App() {
           <>
             <Header
               city={weather.city}
-              setOpenModalWithForm={setOpenModalWithForm}
+              setIsAddItemModalOpen={setIsAddItemModalOpen}
             ></Header>
             <Routes>
               <Route
