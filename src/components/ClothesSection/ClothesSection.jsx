@@ -4,14 +4,14 @@ import ItemCard from "../ItemCard/ItemCard";
 export default function ClothesSection({
   clothingItems,
   setSelectedCard,
-  setOpenModalWithForm,
+  setIsAddItemModalOpen,
 }) {
   function handleSelectedCard(card) {
     setSelectedCard(card);
   }
 
   function openForm() {
-    setOpenModalWithForm(true);
+    setIsAddItemModalOpen(true);
   }
   return (
     <div className="clothes-section">

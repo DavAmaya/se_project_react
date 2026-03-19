@@ -75,7 +75,7 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
+  function getClothes() {
     clothingApi
       .getClothing()
       .then((res) => {
@@ -84,7 +84,11 @@ function App() {
       .catch((err) => {
         console.error(`Error: ${err}`);
       });
-  }, [selectedCard]);
+  }
+
+  useEffect(() => {
+    getClothes();
+  }, []);
 
   //determines the weather temp condition when weather is loaded/changes
   useEffect(() => {
@@ -92,6 +96,31 @@ function App() {
 
     setWeatherCondition(weatherApi.getWeatherCondition(weather.temp.F));
   }, [weather]);
+
+  function handleDelete() {
+    clothingApi
+      .deleteItem(selectedCard)
+      .then(() => {
+        setTimeout(() => {
+          setIsDeleteModalOpen(false);
+        }, 1000);
+        setSelectedCard(null);
+      })
+      .catch((err) => {
+        console.error(`Error: ${err}`);
+      });
+  }
+
+  function addItemOnSubmit(newItem) {
+    clothingApi
+      .addNewItem(newItem)
+      .then((res) => {
+        setClothingItems((prevItems) => [res, ...prevItems]);
+      })
+      .catch((err) => {
+        console.error(`Error: ${err}`);
+      });
+  }
 
   return (
     <CurrentTemperatureUnitContext.Provider
@@ -134,10 +163,9 @@ function App() {
         <AddItemModal
           formFields={formFields}
           radioOptions={radioOptions}
-          setClothingItems={setClothingItems}
           isAddItemModalOpen={isAddItemModalOpen}
           setIsAddItemModalOpen={setIsAddItemModalOpen}
-          clothingApi={clothingApi}
+          onSubmit={addItemOnSubmit}
         ></AddItemModal>
 
         {selectedCard ? (
@@ -153,8 +181,8 @@ function App() {
             isDeleteModalOpen={isDeleteModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
             setSelectedCard={setSelectedCard}
-            selectedCard={selectedCard}
-            clothingApi={clothingApi}
+            handleDelete={handleDelete}
+            getClothes={getClothes}
           />
         ) : null}
       </div>

@@ -7,6 +7,7 @@ function AddItemModal({
   setClothingItems,
   formFields,
   clothingApi,
+  onSubmit,
 }) {
   return isAddItemModalOpen ? (
     <ModalWithForm
@@ -14,10 +15,9 @@ function AddItemModal({
       hasRadio={true}
       radioOptions={radioOptions}
       btnText={"Add garment"}
-      setClothingItems={setClothingItems}
       isAddItemModalOpen={isAddItemModalOpen}
       setIsAddItemModalOpen={setIsAddItemModalOpen}
-      clothingApi={clothingApi}
+      onSubmit={onSubmit}
     ></ModalWithForm>
   ) : null;
 }

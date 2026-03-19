@@ -46,5 +46,7 @@
 .card__img {
   width: 100%;
   border-radius: 20px;
+  height: 283px;
+  object-fit: cover;
   display: block;
 }

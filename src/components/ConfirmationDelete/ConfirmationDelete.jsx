@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 function ConfirmationDelete({
   isDeleteModalOpen,
   setIsDeleteModalOpen,
-  selectedCard,
   setSelectedCard,
-  clothingApi,
+  handleDelete,
+  getClothes,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,19 +32,10 @@ function ConfirmationDelete({
     }
   }
 
-  function handleDelete() {
-    clothingApi
-      .deleteItem(selectedCard)
-      .then(() => {
-        setIsModalOpen(false);
-        setTimeout(() => {
-          setIsDeleteModalOpen(false);
-        }, 1000);
-        setSelectedCard(null);
-      })
-      .catch((err) => {
-        console.error(`Error: ${err}`);
-      });
+  function handleConfirm() {
+    handleDelete();
+    setIsModalOpen(false);
+    getClothes();
   }
   return (
     <div
@@ -71,7 +62,7 @@ function ConfirmationDelete({
         <div className="confirmation-delete__options">
           <button
             className="confirmation-delete__btn confirmation-delete__delete"
-            onClick={handleDelete}
+            onClick={handleConfirm}
           >
             Yes, delete item
           </button>

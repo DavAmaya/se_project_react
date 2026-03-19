@@ -5,7 +5,7 @@ import "./Profile.css";
 export default function Profile({
   clothingItems,
   setSelectedCard,
-  setOpenModalWithForm,
+  setIsAddItemModalOpen,
 }) {
   return (
     <section className="profile">
@@ -13,7 +13,7 @@ export default function Profile({
       <ClothesSection
         clothingItems={clothingItems}
         setSelectedCard={setSelectedCard}
-        setOpenModalWithForm={setOpenModalWithForm}
+        setIsAddItemModalOpen={setIsAddItemModalOpen}
       ></ClothesSection>
     </section>
   );

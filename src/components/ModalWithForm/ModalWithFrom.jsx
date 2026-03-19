@@ -8,10 +8,9 @@ function ModalWithForm({
   hasRadio,
   radioOptions,
   btnText,
-  setClothingItems,
   isAddItemModalOpen,
   setIsAddItemModalOpen,
-  clothingApi,
+  onSubmit,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,7 +41,7 @@ function ModalWithForm({
     }
   }
 
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     if (evt) {
       evt.preventDefault();
     }
@@ -53,21 +52,20 @@ function ModalWithForm({
     const newItem = {
       ...values,
     };
-    clothingApi
-      .addNewItem(newItem)
-      .then((res) => {
-        setClothingItems((prevItems) => [res, ...prevItems]);
-        //resets states
-        setErrors({});
-        setIsValid(false);
-        setIsModalOpen(false);
-        setTimeout(() => {
-          setIsAddItemModalOpen(false);
-        }, 1000);
-      })
-      .catch((err) => {
-        console.error(`Error: ${err}`);
-      });
+
+    try {
+      console.log(newItem);
+      await onSubmit(newItem);
+      //resets states
+      setErrors({});
+      setIsValid(false);
+      setIsModalOpen(false);
+      setTimeout(() => {
+        setIsAddItemModalOpen(false);
+      }, 1000);
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   }
 
   function capitalizeFirstLetter(string) {
