@@ -54,7 +54,6 @@ function ModalWithForm({
     };
 
     try {
-      console.log(newItem);
       await onSubmit(newItem);
       //resets states
       setErrors({});

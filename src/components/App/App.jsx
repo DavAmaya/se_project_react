@@ -101,6 +101,12 @@ function App() {
     clothingApi
       .deleteItem(selectedCard)
       .then(() => {
+        setClothingItems((prevItems) => {
+          return prevItems.filter((item) => {
+            console.log(item);
+            return item._id !== selectedCard._id;
+          });
+        });
         setTimeout(() => {
           setIsDeleteModalOpen(false);
         }, 1000);
@@ -182,7 +188,6 @@ function App() {
             setIsDeleteModalOpen={setIsDeleteModalOpen}
             setSelectedCard={setSelectedCard}
             handleDelete={handleDelete}
-            getClothes={getClothes}
           />
         ) : null}
       </div>

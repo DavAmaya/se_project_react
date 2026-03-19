@@ -7,7 +7,6 @@ function ConfirmationDelete({
   setIsDeleteModalOpen,
   setSelectedCard,
   handleDelete,
-  getClothes,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -35,7 +34,6 @@ function ConfirmationDelete({
   function handleConfirm() {
     handleDelete();
     setIsModalOpen(false);
-    getClothes();
   }
   return (
     <div
